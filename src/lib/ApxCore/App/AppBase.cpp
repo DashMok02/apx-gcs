@@ -67,6 +67,7 @@ AppBase::AppBase(int &argc, char **argv, const QString &name)
 
     QSettings::setDefaultFormat(QSettings::IniFormat);
     //prefs
+    m_version = VERSION;
     QDir prefs_dir(AppDirs::prefs());
     if (!prefs_dir.exists())
         prefs_dir.mkpath(".");
@@ -75,7 +76,7 @@ AppBase::AppBase(int &argc, char **argv, const QString &name)
     QApplication::setWindowIcon(QIcon("qrc:///icons/uavos-logo.icns"));
 
     // app constants
-    m_version = VERSION;
+
     apxConsole() << tr("Version").append(":") << m_version;
 
     m_hash = GIT_HASH;

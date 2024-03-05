@@ -19,7 +19,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include "AppDirs.h"
+#include "AppBase.h"
 
 #include <app_def.h>
 
@@ -54,8 +56,17 @@ QDir AppDirs::user()
 #ifdef __ANDROID__
     return QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/.gcu");
 #else
+    qsizetype macro_version = 0;
+    QString ver = AppBase::version();
+    for (qsizetype i = 0; i < ver.size(); ++i) {
+        if (ver.at(i) == ".") {
+            macro_version = i;
+            break;
+        }
+    }
+    ver.truncate(macro_version);
     return QDir(QDir(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation))
-                    .absoluteFilePath("UAVOS"));
+                    .absoluteFilePath("UAVOS-" + ver));
 #endif
 }
 
